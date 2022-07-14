@@ -1,38 +1,46 @@
-    using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ship_controller : MonoBehaviour
 {
+    public float speed;
+    public float rotationSensitivity;
+    public float rotationSmoothTime;
 
-    
-    public Transform upperLeftNozzle = null;
-    public Transform upperRightNozzle = null;
-    public Transform mainNozzle = null;
-
-    [SerializeField]
     private Rigidbody2D rb = null;
-
-    [SerializeField]
-    private float upperNozzleForce = 0;
-
-
+    private Vector3 movement;
+    private Vector3 currentRotation;
+    private Vector3 rotationSmoothVelocity;
     private float dirX;
+    private float dirY;
+    private float yaw;
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
 
     private void Update()
     {
         dirX = Input.GetAxis("Horizontal");
-
+        dirY = Input.GetAxis("Vertical");
+        if (dirY < 0)
+            dirY = 0;
+        Vector3 vertical = transform.up * dirY * speed;
+        movement = new Vector3(0, 0, 0) + vertical;
     }
 
     private void FixedUpdate()
     {
-        Vector3 upperForceDir = transform.right * dirX * upperNozzleForce;
-        if (dirX > 0)
-            rb.AddForceAtPosition(upperForceDir, upperLeftNozzle.position);
-        else  if(dirX < 0)
-            rb.AddForceAtPosition(upperForceDir, upperRightNozzle.position);
+        rb.velocity = movement;
+    }
 
+    private void LateUpdate()
+    {
+        yaw -= dirX * rotationSensitivity;
 
+        currentRotation = Vector3.SmoothDamp(currentRotation, new Vector3(0, 0, yaw), ref rotationSmoothVelocity, rotationSmoothTime);
+        transform.eulerAngles = currentRotation;
     }
 }

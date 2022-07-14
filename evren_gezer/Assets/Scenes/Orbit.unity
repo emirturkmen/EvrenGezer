@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.3731193, g: 0.38073996, b: 0.3587269, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -207,6 +207,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &806360497 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8378634289298098433, guid: 18ba459346897f94a9a23dcb29fc5ad7, type: 3}
+  m_PrefabInstance: {fileID: 1693346008}
+  m_PrefabAsset: {fileID: 0}
+--- !u!58 &806360502
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806360497}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!1 &1470342450
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,6 +329,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2559538874352242560, guid: 18ba459346897f94a9a23dcb29fc5ad7, type: 3}
+      propertyPath: forceMultiplier
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 8378634289298098433, guid: 18ba459346897f94a9a23dcb29fc5ad7, type: 3}
       propertyPath: m_Name
       value: Planet
@@ -408,6 +433,26 @@ PrefabInstance:
     - target: {fileID: 2264883377868228528, guid: 849b2082cc85a5f4b84f194a53ed373c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2696051404932700335, guid: 849b2082cc85a5f4b84f194a53ed373c, type: 3}
+      propertyPath: speed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2696051404932700335, guid: 849b2082cc85a5f4b84f194a53ed373c, type: 3}
+      propertyPath: mainNozzleForce
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2696051404932700335, guid: 849b2082cc85a5f4b84f194a53ed373c, type: 3}
+      propertyPath: upperNozzleForce
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2696051404932700335, guid: 849b2082cc85a5f4b84f194a53ed373c, type: 3}
+      propertyPath: rotationSmoothTime
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2696051404932700335, guid: 849b2082cc85a5f4b84f194a53ed373c, type: 3}
+      propertyPath: rotationSensitivity
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5043848529135639419, guid: 849b2082cc85a5f4b84f194a53ed373c, type: 3}
       propertyPath: m_Mass

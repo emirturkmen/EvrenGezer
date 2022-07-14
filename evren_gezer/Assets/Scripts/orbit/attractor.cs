@@ -18,7 +18,7 @@ public class attractor : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 gravity =  calcGravity();
+        Vector3 gravity = calcGravity();
         shipRb.AddForce(gravity);
     }
 
