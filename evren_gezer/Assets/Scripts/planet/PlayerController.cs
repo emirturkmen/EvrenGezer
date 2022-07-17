@@ -5,10 +5,6 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 	public float moveSpeed = 4f;
-	Vector3 moveAmount;
-	Vector3 smoothMoveVelocity;
-
-	private float rotation;
 	private Rigidbody rb;
 	Vector3 groundNormal;
 	private bool isGround;
