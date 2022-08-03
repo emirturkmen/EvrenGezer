@@ -11,7 +11,7 @@ public class Fuel : MonoBehaviour
 
     void Update()
     {
-        
+        transform.Rotate(0, 0, 60 * Time.deltaTime, Space.Self);
     }
 
     public void OnTriggerEnter(Collider col)

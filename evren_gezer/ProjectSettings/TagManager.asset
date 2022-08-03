@@ -9,6 +9,9 @@ TagManager:
   - FuelBarFill
   - Fuel
   - HealthBarFill
+  - ship
+  - Coin
+  - GoldText
   layers:
   - Default
   - TransparentFX

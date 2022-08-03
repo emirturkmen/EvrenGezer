@@ -11,7 +11,7 @@ public class Food : MonoBehaviour
 
     void Update()
     {
-        
+        transform.Rotate(0, 60 * Time.deltaTime, 0, Space.Self);
     }
 
     public void OnTriggerEnter(Collider col)
