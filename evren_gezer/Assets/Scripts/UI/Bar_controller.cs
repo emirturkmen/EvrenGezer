@@ -14,18 +14,10 @@ public class Bar_controller : MonoBehaviour
         FillImage.fillAmount = fill_rate;   
     }
 
-    public void increaseFillRate()
+    public void setFillRate(float f)
     {
-       if(fill_rate < 1.0f)
-        fill_rate += 0.1f;
-        UpdateBar();
-    }
-
-    public void decreaseFillRate()
-    {
-       if(fill_rate > 0f)
-        fill_rate -= 0.1f;
-        UpdateBar();
+       fill_rate = f;
+       UpdateBar();
     }
 
     private void Update()

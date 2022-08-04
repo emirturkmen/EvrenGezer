@@ -12,6 +12,7 @@ TagManager:
   - ship
   - Coin
   - GoldText
+  - Trap
   layers:
   - Default
   - TransparentFX

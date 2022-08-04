@@ -662,7 +662,7 @@ GameObject:
   - component: {fileID: 686943353}
   m_Layer: 0
   m_Name: Trap
-  m_TagString: Untagged
+  m_TagString: Trap
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1463,7 +1463,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c473bdfa5b43854eaf794b8147f3999, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfGold: 0
 --- !u!1 &1390245910
 GameObject:
   m_ObjectHideFlags: 0
