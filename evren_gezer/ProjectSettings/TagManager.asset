@@ -9,6 +9,11 @@ TagManager:
   - FuelBarFill
   - Fuel
   - HealthBarFill
+  - ship
+  - EnemyShip
+  - Rocket
+  - ShipBullet
+  - EnemyBullet
   layers:
   - Default
   - TransparentFX
