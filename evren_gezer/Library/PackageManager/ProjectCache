@@ -5,7 +5,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637950687460000000
+      ticks: 637952182080000000
     m_Hash: 1327354507
   m_LockFileStatus:
     m_FilePath: /Users/oguzhankarahan/UnityProjects/evren_gezer/evren_gezer/Packages/packages-lock.json
@@ -13,7 +13,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637950687460000000
+      ticks: 637952182080000000
     m_Hash: 2008938582
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
