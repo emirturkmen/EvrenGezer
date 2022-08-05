@@ -10,9 +10,10 @@ TagManager:
   - Fuel
   - HealthBarFill
   - ship
-  - Coin
-  - GoldText
-  - Trap
+  - EnemyShip
+  - Rocket
+  - ShipBullet
+  - EnemyBullet
   layers:
   - Default
   - TransparentFX

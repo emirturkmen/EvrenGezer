@@ -1,24 +1,48 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class enemy : MonoBehaviour
 {
+    private Vector3 targetPos1;
+    private Vector3 targetPos2;
     public GameObject bullet;
+    private GameObject target;
+    public float targetMoveDistance;
+    public float speed = 1f;
     public float range;
-    GameObject target;
-
     public float fireRate;
-    float nextFire;
+    private float nextFire;
+    public bool canMove = true;
+    public bool firstMove;
 
     void Start()
     {
-        fireRate = 1f;
+        targetPos1 = transform.position;
+        targetPos2 = transform.position + new Vector3(0, targetMoveDistance, 0);
+        firstMove = true;
         nextFire = Time.time;
     }
 
     void Update()
     {
+        if (transform.position == targetPos1)
+        {
+            firstMove = false;
+        }
+        if (transform.position == targetPos2)
+        {
+            firstMove = true;
+        }
+        if (canMove)
+        {
+            if (firstMove)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, targetPos1, speed * Time.deltaTime);
+            }
+            else
+            {
+                transform.position = Vector3.MoveTowards(transform.position, targetPos2, speed * Time.deltaTime);
+            }
+        }
         target = GameObject.FindGameObjectWithTag("ship");
         if (Vector2.Distance(transform.position, target.transform.position) < range)
         {
