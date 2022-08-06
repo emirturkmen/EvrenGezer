@@ -11,6 +11,10 @@ public class MenuController : MonoBehaviour
     public string newGameScene;
     public string storeScene;
 
+    public GameObject rocket;
+    public float moveLatency;
+    private Vector3 rocketTarget;
+
     
     public Button resume;        
 
@@ -25,6 +29,7 @@ public class MenuController : MonoBehaviour
             resume.interactable = false;
         }
 
+        rocketTarget = rocket.transform.position + rocket.transform.up.normalized * 5;
     }
 
     public void loadNewGame()
@@ -48,4 +53,14 @@ public class MenuController : MonoBehaviour
     {
         Application.Quit();
     }
+
+
+    private void Update()
+    {
+        if (moveLatency <= 0)
+            rocket.transform.position = Vector3.Lerp(rocket.transform.position, rocketTarget, Time.deltaTime * 0.1f);
+        else
+            moveLatency -= Time.deltaTime;
+    }
+
 }
