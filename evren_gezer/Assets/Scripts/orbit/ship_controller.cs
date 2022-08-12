@@ -13,7 +13,13 @@ public class ship_controller : MonoBehaviour
     public GameObject bullet;
     public GameObject brakeParticlesLeft;
     public GameObject brakeParticlesRight;
+    public GameObject smokeEffect;
+    public GameObject flameEffect;
     public Image[] images;
+    public GameObject healthBar;
+    public GameObject fuelBar;
+    public int health = 100;
+    public float fuel = 100;
 
     private Transform head;
     private Rigidbody2D rb = null;
@@ -30,6 +36,7 @@ public class ship_controller : MonoBehaviour
         hasRocket = true;
         brakeParticlesLeft.SetActive(false);
         brakeParticlesRight.SetActive(false);
+        flameEffect.SetActive(false);
         head = transform.Find("HeadOfRocket");
         rb = GetComponent<Rigidbody2D>();
         nextFire = Time.time;
@@ -60,7 +67,6 @@ public class ship_controller : MonoBehaviour
                         homingMissileScript.rotateSpeed = 200;
                         for (int j = images.Length - 1; j >= 0; j--)
                         {
-                            Debug.Log("Here1");
                             if (images[j].isActiveAndEnabled)
                             {
                                 images[j].enabled = false;
@@ -89,6 +95,10 @@ public class ship_controller : MonoBehaviour
     {
         if (dirY > 0)
         {
+            if (!flameEffect.activeSelf)
+            {
+                flameEffect.SetActive(true);
+            }
             Vector3 mainForceDir = transform.up * dirY * mainNozzleForce;
             if (brakeParticlesLeft.activeSelf && brakeParticlesRight.activeSelf)
             {
@@ -96,19 +106,30 @@ public class ship_controller : MonoBehaviour
                 brakeParticlesRight.SetActive(false);
             }
             rb.AddForceAtPosition(mainForceDir, mainNozzle.position);
+            ReduceFuel(0.05f);
         }
         else if(dirY < 0)
         {
+            if (flameEffect.activeSelf)
+            {
+                flameEffect.SetActive(false);
+            }
             Vector3 brakeForceDir = rb.velocity.normalized * dirY * mainNozzleForce;
             if (!brakeParticlesLeft.activeSelf && !brakeParticlesRight.activeSelf)
             {
                 brakeParticlesLeft.SetActive(true);
                 brakeParticlesRight.SetActive(true);
+                brakeParticlesLeft.gameObject.transform.rotation = Quaternion.Euler((360 + Vector2.SignedAngle(new Vector2(-1, 0), rb.velocity)) % 360, -90, 90);
+                brakeParticlesRight.gameObject.transform.rotation = Quaternion.Euler((360 + Vector2.SignedAngle(new Vector2(-1, 0), rb.velocity)) % 360, -90, 90);
             }
             rb.AddForceAtPosition(brakeForceDir, transform.position);
         }
         else
         {
+            if (flameEffect.activeSelf)
+            {
+                flameEffect.SetActive(false);
+            }
             if (brakeParticlesLeft.activeSelf && brakeParticlesRight.activeSelf)
             {
                 brakeParticlesLeft.SetActive(false);
@@ -123,5 +144,19 @@ public class ship_controller : MonoBehaviour
 
         currentRotation = Vector3.SmoothDamp(currentRotation, new Vector3(0, 0, yaw), ref rotationSmoothVelocity, rotationSmoothTime);
         transform.eulerAngles = currentRotation;
+    }
+
+    public void ReduceHealth(int reduceAmount)
+    {
+        Bar_controller barScript = healthBar.gameObject.GetComponent<Bar_controller>();
+        barScript.ReduceBar((float)reduceAmount / 100);
+        health -= reduceAmount;
+    }
+
+    public void ReduceFuel(float reduceAmount)
+    {
+        Bar_controller barScript = fuelBar.gameObject.GetComponent<Bar_controller>();
+        barScript.ReduceBar(reduceAmount / 100);
+        fuel -= reduceAmount;
     }
 }
