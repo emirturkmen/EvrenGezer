@@ -13,7 +13,6 @@ public class HomingMissile : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        Debug.Log(speed);
     }
 
     private void FixedUpdate()
@@ -29,6 +28,8 @@ public class HomingMissile : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("EnemyShip"))
         {
+            enemy enemyScript = collision.gameObject.GetComponent<enemy>();
+            enemyScript.health = 0;
             Destroy(Instantiate(explosionEffect, transform.position, transform.rotation), 2f);
             Destroy(gameObject);
         } else if (!collision.gameObject.tag.Equals("ship") && !collision.gameObject.tag.Equals("Rocket"))

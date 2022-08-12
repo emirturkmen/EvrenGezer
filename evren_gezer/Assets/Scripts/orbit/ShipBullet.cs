@@ -21,6 +21,8 @@ public class ShipBullet : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("EnemyShip"))
         {
+            enemy enemyScript = collision.gameObject.GetComponent<enemy>();
+            enemyScript.ReduceHealth(20);
             Destroy(gameObject);
         }
         else if (!collision.gameObject.tag.Equals("ship") && !collision.gameObject.tag.Equals("ShipBullet"))

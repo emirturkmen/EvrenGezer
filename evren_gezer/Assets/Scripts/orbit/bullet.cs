@@ -24,7 +24,6 @@ public class bullet : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("ship"))
         {
-            Debug.Log("Hit");
             Destroy(gameObject);
         } else
         {

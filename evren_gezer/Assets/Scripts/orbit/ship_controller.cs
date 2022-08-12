@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ship_controller : MonoBehaviour
 {
@@ -12,6 +11,9 @@ public class ship_controller : MonoBehaviour
     public float fireRate;
     public GameObject missile;
     public GameObject bullet;
+    public GameObject brakeParticlesLeft;
+    public GameObject brakeParticlesRight;
+    public Image[] images;
 
     private Transform head;
     private Rigidbody2D rb = null;
@@ -21,9 +23,13 @@ public class ship_controller : MonoBehaviour
     private float dirY;
     private float yaw;
     private float nextFire;
+    private bool hasRocket;
 
     private void Start()
     {
+        hasRocket = true;
+        brakeParticlesLeft.SetActive(false);
+        brakeParticlesRight.SetActive(false);
         head = transform.Find("HeadOfRocket");
         rb = GetComponent<Rigidbody2D>();
         nextFire = Time.time;
@@ -35,17 +41,37 @@ public class ship_controller : MonoBehaviour
         dirY = Input.GetAxis("Vertical");
         if (Input.GetKeyDown("space"))
         {
-            GameObject[] targets = GameObject.FindGameObjectsWithTag("EnemyShip");
-            for (int i = 0; i < targets.Length; i++)
+            if (hasRocket)
             {
-                GameObject target = targets[i];
-                if (Vector2.Distance(transform.position, target.transform.position) < range)
+                GameObject[] targets = GameObject.FindGameObjectsWithTag("EnemyShip");
+                for (int i = 0; i < targets.Length; i++)
                 {
-                    GameObject instantiatedMissile = Instantiate(missile, transform.position, Quaternion.identity);
-                    HomingMissile homingMissileScript = instantiatedMissile.GetComponent<HomingMissile>();
-                    homingMissileScript.target = target.transform;
-                    homingMissileScript.speed = 5;
-                    homingMissileScript.rotateSpeed = 200;
+                    if (!hasRocket)
+                    {
+                        break;
+                    }
+                    GameObject target = targets[i];
+                    if (Vector2.Distance(transform.position, target.transform.position) < range)
+                    {
+                        GameObject instantiatedMissile = Instantiate(missile, transform.position, Quaternion.identity);
+                        HomingMissile homingMissileScript = instantiatedMissile.GetComponent<HomingMissile>();
+                        homingMissileScript.target = target.transform;
+                        homingMissileScript.speed = 5;
+                        homingMissileScript.rotateSpeed = 200;
+                        for (int j = images.Length - 1; j >= 0; j--)
+                        {
+                            Debug.Log("Here1");
+                            if (images[j].isActiveAndEnabled)
+                            {
+                                images[j].enabled = false;
+                                break;
+                            }
+                        }
+                        if (!images[0].isActiveAndEnabled)
+                        {
+                            hasRocket = false;
+                        }
+                    }
                 }
             }
         }
@@ -57,15 +83,37 @@ public class ship_controller : MonoBehaviour
                 nextFire = Time.time + fireRate;
             }
         }
-
     }
 
     private void FixedUpdate()
     {
-        Vector3 mainForceDir = transform.up * dirY * mainNozzleForce;
         if (dirY > 0)
         {
+            Vector3 mainForceDir = transform.up * dirY * mainNozzleForce;
+            if (brakeParticlesLeft.activeSelf && brakeParticlesRight.activeSelf)
+            {
+                brakeParticlesLeft.SetActive(false);
+                brakeParticlesRight.SetActive(false);
+            }
             rb.AddForceAtPosition(mainForceDir, mainNozzle.position);
+        }
+        else if(dirY < 0)
+        {
+            Vector3 brakeForceDir = rb.velocity.normalized * dirY * mainNozzleForce;
+            if (!brakeParticlesLeft.activeSelf && !brakeParticlesRight.activeSelf)
+            {
+                brakeParticlesLeft.SetActive(true);
+                brakeParticlesRight.SetActive(true);
+            }
+            rb.AddForceAtPosition(brakeForceDir, transform.position);
+        }
+        else
+        {
+            if (brakeParticlesLeft.activeSelf && brakeParticlesRight.activeSelf)
+            {
+                brakeParticlesLeft.SetActive(false);
+                brakeParticlesRight.SetActive(false);
+            }
         }
     }
 
