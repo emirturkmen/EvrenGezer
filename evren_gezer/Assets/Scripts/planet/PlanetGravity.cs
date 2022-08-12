@@ -9,7 +9,7 @@ public class PlanetGravity : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameObject player = GameObject.Find("Play");
+        GameObject player = GameObject.FindWithTag("Player");
         playerRb = player.GetComponent<Rigidbody>();
     }
 
