@@ -1,18 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Store : MonoBehaviour
 {
-    // Start is called before the first frame update
+    
     void Start()
     {
-        
+        loadCoin();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void loadCoin()
     {
-        
+        SaveLoad.Load();
+        GameObject goldText = GameObject.FindWithTag("GoldText");
+        TextMeshProUGUI text = goldText.GetComponent<TextMeshProUGUI>();
+        text.text = SaveData.coin.ToString();
+    }
+
+    private bool isCoinEnough(float price){
+        if(SaveData.coin < price)
+            return false;
+        return true;
     }
 }

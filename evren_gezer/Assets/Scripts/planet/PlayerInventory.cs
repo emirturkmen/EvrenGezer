@@ -5,60 +5,50 @@ using TMPro;
 
 public class PlayerInventory : MonoBehaviour
 {
-    // Start is called before the first frame update
-    public static float coin = 0f;
-    public static float fuel = 0.5f;
-    public static float health = 0.5f;
-
     void Update(){
         GameObject fuelBarFill = GameObject.FindWithTag("FuelBarFill");
         Bar_controller fuel_bar_controller = fuelBarFill.GetComponent<Bar_controller>();
-        fuel_bar_controller.setFillRate(fuel);
+        fuel_bar_controller.setFillRate(SaveData.fuel);
         GameObject healthBarFill = GameObject.FindWithTag("HealthBarFill");
         Bar_controller health_bar_controller = healthBarFill.GetComponent<Bar_controller>();
-        health_bar_controller.setFillRate(health);
+        health_bar_controller.setFillRate(SaveData.health);
         GameObject goldText = GameObject.FindWithTag("GoldText");
         TextMeshProUGUI text = goldText.GetComponent<TextMeshProUGUI>();
-        text.text = coin.ToString();
+        text.text = SaveData.coin.ToString();
     }
 
     public void OnTriggerEnter(Collider col)
     {
         if(col.tag == "Coin"){
-            coin++;
+            SaveLoad.Load();
+            SaveData.coin++;
             GameObject goldText = GameObject.FindWithTag("GoldText");
             TextMeshProUGUI text = goldText.GetComponent<TextMeshProUGUI>();
-            text.text = coin.ToString();
+            text.text = SaveData.coin.ToString();
             col.gameObject.SetActive(false);
+            SaveLoad.Save();
         }
         else if(col.tag == "Fuel"){
-            if(fuel < 1.0f){
-                fuel += 0.1f;
+            SaveLoad.Load();
+            if(SaveData.fuel < 1.0f){
+                SaveData.fuel += 0.1f;
                 GameObject fillBar = GameObject.FindWithTag("FuelBarFill");
                 Bar_controller bar_controller = fillBar.GetComponent<Bar_controller>();
-                bar_controller.setFillRate(fuel);
+                bar_controller.setFillRate(SaveData.fuel);
             }
             col.gameObject.SetActive(false);
+            SaveLoad.Save();
         }
         else if(col.tag == "Food"){
-            if(health < 1.0f){
-                health += 0.1f;
+            SaveLoad.Load();
+            if(SaveData.health < 1.0f){
+                SaveData.health += 0.1f;
                 GameObject fillBar = GameObject.FindWithTag("HealthBarFill");
                 Bar_controller bar_controller = fillBar.GetComponent<Bar_controller>();
-                bar_controller.setFillRate(health);
+                bar_controller.setFillRate(SaveData.health);
             }
             col.gameObject.SetActive(false);
-        }
-        else if(col.tag == "Trap"){
-            if(health > 0f){
-                health -= 0.1f;
-                GameObject fillBar = GameObject.FindWithTag("HealthBarFill");
-                Bar_controller bar_controller = fillBar.GetComponent<Bar_controller>();
-                bar_controller.setFillRate(health);
-            }
-            col.gameObject.SetActive(false);
+            SaveLoad.Save();
         }
     }
-
-    
 }

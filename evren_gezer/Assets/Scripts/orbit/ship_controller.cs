@@ -18,8 +18,6 @@ public class ship_controller : MonoBehaviour
     public Image[] images;
     public GameObject healthBar;
     public GameObject fuelBar;
-    public int health = 100;
-    public float fuel = 100;
 
     private Transform head;
     private Rigidbody2D rb = null;
@@ -33,6 +31,14 @@ public class ship_controller : MonoBehaviour
 
     private void Start()
     {
+        SaveLoad.Load();
+        transform.position = new Vector3(SaveData.shipPosition[0], SaveData.shipPosition[1], SaveData.shipPosition[2]);
+        transform.rotation = Quaternion.Euler(SaveData.shipRotation[0], SaveData.shipRotation[1], SaveData.shipRotation[2]);
+        Bar_controller fuelBarScript = fuelBar.gameObject.GetComponent<Bar_controller>();
+        Bar_controller healthBarScript = healthBar.gameObject.GetComponent<Bar_controller>();
+        
+        fuelBarScript.setFillRate(SaveData.fuel);
+        healthBarScript.setFillRate(SaveData.health);
         hasRocket = true;
         brakeParticlesLeft.SetActive(false);
         brakeParticlesRight.SetActive(false);
@@ -44,6 +50,20 @@ public class ship_controller : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown("escape"))
+        {
+            float[] shipPosition = {transform.position.x, transform.position.y, transform.position.z};
+            Debug.Log(shipPosition[0]);
+            Debug.Log(shipPosition[1]);
+            Debug.Log(shipPosition[2]);
+            SaveData.shipPosition = shipPosition;
+            float[] shipRotation = {transform.localEulerAngles.x, transform.localEulerAngles.y, transform.localEulerAngles.z};
+            Debug.Log(shipRotation[0]);
+            Debug.Log(shipRotation[1]);
+            Debug.Log(shipRotation[2]);
+            SaveData.shipRotation = shipRotation;
+            SaveLoad.Save();
+        }
         dirX = Input.GetAxis("Horizontal");
         dirY = Input.GetAxis("Vertical");
         if (Input.GetKeyDown("space"))
@@ -148,15 +168,21 @@ public class ship_controller : MonoBehaviour
 
     public void ReduceHealth(int reduceAmount)
     {
+        SaveLoad.Load();
         Bar_controller barScript = healthBar.gameObject.GetComponent<Bar_controller>();
         barScript.ReduceBar((float)reduceAmount / 100);
-        health -= reduceAmount;
+        SaveData.health -= (float)reduceAmount/100;
+        Debug.Log(SaveData.health);
+        SaveLoad.Save();
     }
 
     public void ReduceFuel(float reduceAmount)
     {
+        SaveLoad.Load();
         Bar_controller barScript = fuelBar.gameObject.GetComponent<Bar_controller>();
         barScript.ReduceBar(reduceAmount / 100);
-        fuel -= reduceAmount;
+        SaveData.fuel -= (float)reduceAmount/100;
+        Debug.Log(SaveData.fuel);
+        SaveLoad.Save();
     }
 }

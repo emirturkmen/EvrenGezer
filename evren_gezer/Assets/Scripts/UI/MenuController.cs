@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
+using System.IO;
+using TMPro;
 
 public class MenuController : MonoBehaviour
 {
@@ -27,6 +28,7 @@ public class MenuController : MonoBehaviour
 
     private void Start()
     {
+        loadCoin();
         audiomanager = gameManager.GetComponent<AudioManager>();
 
         DontDestroyOnLoad(this.gameObject);
@@ -43,9 +45,11 @@ public class MenuController : MonoBehaviour
 
     public void loadNewGame()
     {
+        SaveLoad.LoadNewGame();
         SceneManager.LoadScene(newGameScene, LoadSceneMode.Single);
         audiomanager.playSound("button");
         isMainMenu = false;
+        SaveLoad.Save();
     }
 
 
@@ -53,7 +57,16 @@ public class MenuController : MonoBehaviour
     public bool checkResume()
     {
         audiomanager.playSound("button");
+        if(File.Exists("GameSave.bin"))
+            return true;
         return false;
+    }
+
+    public void loadSavedGame()
+    {
+        SceneManager.LoadScene(newGameScene, LoadSceneMode.Single);
+        audiomanager.playSound("button");
+        isMainMenu = false;
     }
 
     public void loadStore()
@@ -66,6 +79,16 @@ public class MenuController : MonoBehaviour
     {
         audiomanager.playSound("button");
         Application.Quit();
+    }
+
+    private void loadCoin()
+    {
+        SaveLoad.Load();
+        Debug.Log(SaveData.health);
+        Debug.Log(SaveData.fuel);
+        GameObject goldText = GameObject.FindWithTag("GoldText");
+        TextMeshProUGUI text = goldText.GetComponent<TextMeshProUGUI>();
+        text.text = SaveData.coin.ToString();
     }
 
 

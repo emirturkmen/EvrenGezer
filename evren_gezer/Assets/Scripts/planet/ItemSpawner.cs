@@ -6,7 +6,6 @@ public class ItemSpawner : MonoBehaviour
 {
     public GameObject food;
     public GameObject fuel;
-    public GameObject obstacle;
     public GameObject coin;
     private int a = 0;
     // Start is called before the first frame update
@@ -16,7 +15,6 @@ public class ItemSpawner : MonoBehaviour
             {
                 spawnItems(food);
                 spawnItems(fuel);
-                spawnItems(obstacle);
                 spawnItems(coin);
             }
     }
