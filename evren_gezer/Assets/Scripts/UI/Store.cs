@@ -7,11 +7,17 @@ using UnityEngine.SceneManagement;
 
 public class Store : MonoBehaviour
 {
-    
+    public GameObject button;
+
+
     void Start()
     {
+        SaveLoad.Load();
+        SaveData.coin = 450;
+        SaveLoad.Save();
         loadCoin();
     }
+
 
     private void loadCoin()
     {
@@ -21,10 +27,14 @@ public class Store : MonoBehaviour
         text.text = SaveData.coin.ToString();
     }
 
-    private bool isCoinEnough(float price){
-        if(SaveData.coin < price)
-            return false;
-        return true;
+    public void isCoinEnough(int price){
+        if (SaveData.coin < price)            
+            return;
+
+        SaveData.coin -= price;
+        SaveLoad.Save();
+        loadCoin();
+        button.gameObject.SetActive(false);
     }
 
     public void loadMenu()

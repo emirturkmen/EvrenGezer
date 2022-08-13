@@ -64,11 +64,13 @@ public class orbitcontroller : MonoBehaviour
     public void loadMainMenu()
     {
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+        Time.timeScale = 1;
     }
 
     public void loadStore()
     {
         SceneManager.LoadScene("Store", LoadSceneMode.Single);
+        Time.timeScale = 1;
     }
 
     public void exitGame()
@@ -76,10 +78,6 @@ public class orbitcontroller : MonoBehaviour
         Application.Quit();
     }
 
-    public void openRestart()
-    {
-
-    }
 
     private void saveOrbit(){
         float[] shipPosition = {transform.position.x, transform.position.y, transform.position.z};
@@ -99,5 +97,13 @@ public class orbitcontroller : MonoBehaviour
 
     public void karakterOldu()
     {
+        SaveLoad.LoadNewGame();
+        Restart.SetActive(true);        
+    }
+
+    public void restartGame()
+    {
+        SceneManager.LoadScene("Earth", LoadSceneMode.Single);
+        Restart.SetActive(false);
     }
 }
