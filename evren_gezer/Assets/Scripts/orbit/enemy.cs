@@ -59,10 +59,13 @@ public class enemy : MonoBehaviour
                 transform.position = Vector3.MoveTowards(transform.position, targetPos2, speed * Time.deltaTime);
             }
         }
-        if (Vector2.Distance(transform.position, target.transform.position) < range)
+        if (target != null)
         {
-            transform.up = target.transform.position - transform.position;
-            CheckIfTimeToFire();
+            if (Vector2.Distance(transform.position, target.transform.position) < range)
+            {
+                transform.up = target.transform.position - transform.position;
+                CheckIfTimeToFire();
+            }
         }
         healthBar.transform.position = cam.WorldToScreenPoint(healthBarPos.position);
     }

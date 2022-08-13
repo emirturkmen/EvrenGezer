@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731704, g: 0.13414726, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -16348,6 +16348,15 @@ PrefabInstance:
       propertyPath: smokeEffect
       value: 
       objectReference: {fileID: 1413462794}
+    - target: {fileID: 1507411353, guid: 22bf7af566dbc1e4ea93f270d2418b6f, type: 3}
+      propertyPath: explosionEffect
+      value: 
+      objectReference: {fileID: 1000011797152326, guid: acf39d9f4addf294d93fa56fa373961b,
+        type: 3}
+    - target: {fileID: 1507411353, guid: 22bf7af566dbc1e4ea93f270d2418b6f, type: 3}
+      propertyPath: orbitcontroller
+      value: 
+      objectReference: {fileID: 1441835326}
     - target: {fileID: 1507411353, guid: 22bf7af566dbc1e4ea93f270d2418b6f, type: 3}
       propertyPath: images.Array.size
       value: 5

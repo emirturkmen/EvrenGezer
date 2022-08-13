@@ -17,10 +17,14 @@ public class orbitcontroller : MonoBehaviour
     private void Update()
     {
         string planetName = "";
-        foreach (GameObject item in planets){
-            if(Vector2.Distance(item.transform.position,Rocket.transform.position) < 6)
+        if (Rocket != null)
+        {
+            foreach (GameObject item in planets)
             {
-                planetName = item.name;                
+                if (Vector2.Distance(item.transform.position, Rocket.transform.position) < 6)
+                {
+                    planetName = item.name;
+                }
             }
         }
 
@@ -91,5 +95,9 @@ public class orbitcontroller : MonoBehaviour
                 numberOfMissiles++;
         SaveData.numberOfMissiles = numberOfMissiles;
         SaveLoad.Save();
+    }
+
+    public void karakterOldu()
+    {
     }
 }

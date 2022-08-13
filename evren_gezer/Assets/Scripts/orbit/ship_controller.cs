@@ -18,6 +18,8 @@ public class ship_controller : MonoBehaviour
     public Image[] images;
     public GameObject healthBar;
     public GameObject fuelBar;
+    public GameObject explosionEffect;
+    public orbitcontroller orbitcontroller;
 
     private Transform head;
     private Rigidbody2D rb = null;
@@ -28,6 +30,8 @@ public class ship_controller : MonoBehaviour
     private float yaw;
     private float nextFire;
     private bool hasRocket;
+    private Bar_controller fuelBarScript;
+    private Bar_controller healthBarScript;
 
     private void Start()
     {
@@ -36,8 +40,8 @@ public class ship_controller : MonoBehaviour
         transform.eulerAngles = new Vector3(0,0,SaveData.shipRotationZ);
         Debug.Log(transform.eulerAngles);
         Debug.Log(transform.rotation);
-        Bar_controller fuelBarScript = fuelBar.gameObject.GetComponent<Bar_controller>();
-        Bar_controller healthBarScript = healthBar.gameObject.GetComponent<Bar_controller>();
+        fuelBarScript = fuelBar.gameObject.GetComponent<Bar_controller>();
+        healthBarScript = healthBar.gameObject.GetComponent<Bar_controller>();
         fuelBarScript.setFillRate(SaveData.fuel);
         healthBarScript.setFillRate(SaveData.health);
 
@@ -59,12 +63,23 @@ public class ship_controller : MonoBehaviour
 
     private void Update()
     {
+	    if (healthBarScript.GetFillRate() <= 0)
+        {
+            Destroy(Instantiate(explosionEffect, transform.position, transform.rotation), 2f);
+            orbitcontroller.karakterOldu();
+            Destroy(gameObject);
+        }
         if (Input.GetKeyDown("escape"))
         {
             saveOrbit();
         }
         dirX = Input.GetAxis("Horizontal");
         dirY = Input.GetAxis("Vertical");
+	    if (fuelBarScript.GetFillRate() <= 0)
+        {
+            dirX = 0;
+            dirY = 0;
+        }
         if (Input.GetKeyDown("space"))
         {
             if (hasRocket)
@@ -168,8 +183,7 @@ public class ship_controller : MonoBehaviour
     public void ReduceHealth(int reduceAmount)
     {
         SaveLoad.Load();
-        Bar_controller barScript = healthBar.gameObject.GetComponent<Bar_controller>();
-        barScript.ReduceBar((float)reduceAmount / 100);
+        healthBarScript.ReduceBar((float)reduceAmount / 100);
         SaveData.health -= (float)reduceAmount/100;
         Debug.Log(SaveData.health);
         SaveLoad.Save();
@@ -178,8 +192,7 @@ public class ship_controller : MonoBehaviour
     public void ReduceFuel(float reduceAmount)
     {
         SaveLoad.Load();
-        Bar_controller barScript = fuelBar.gameObject.GetComponent<Bar_controller>();
-        barScript.ReduceBar(reduceAmount / 100);
+        fuelBarScript.ReduceBar(reduceAmount / 100);
         SaveData.fuel -= (float)reduceAmount/100;
         Debug.Log(SaveData.fuel);
         SaveLoad.Save();

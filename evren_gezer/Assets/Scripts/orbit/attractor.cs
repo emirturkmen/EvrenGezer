@@ -10,9 +10,11 @@ public class attractor : MonoBehaviour
     private GameObject shipObj = null;
     private Rigidbody2D shipRb = null;
     private LineRenderer line;
+    private float range;
 
     private void Start()
     {
+	    range = radius * transform.localScale.x;
         shipObj = GameObject.FindGameObjectWithTag("ship");
         shipRb = shipObj.GetComponent<Rigidbody2D>();
         line = transform.Find("GravitationalField").gameObject.GetComponent<LineRenderer>();
@@ -23,9 +25,10 @@ public class attractor : MonoBehaviour
 
 
     private void FixedUpdate()
-    {
-        if (Vector2.Distance(transform.position, shipObj.transform.position) < radius)
+    { 
+        if (shipObj != null && Vector2.Distance(transform.position, shipObj.transform.position) < range)
         {
+            Debug.Log(gameObject.name);
             Vector3 gravity = calcGravity();
             shipRb.AddForce(gravity);
         }

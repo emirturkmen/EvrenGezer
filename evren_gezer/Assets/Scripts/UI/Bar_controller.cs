@@ -19,6 +19,11 @@ public class Bar_controller : MonoBehaviour
         FillImage.fillAmount -= reduceAmount;
     }
 
+    public float GetFillRate()
+    {
+        return FillImage.fillAmount;
+    }
+
     public void setFillRate(float f)
     {
        fill_rate = f;
