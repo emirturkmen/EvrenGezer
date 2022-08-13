@@ -33,12 +33,21 @@ public class ship_controller : MonoBehaviour
     {
         SaveLoad.Load();
         transform.position = new Vector3(SaveData.shipPosition[0], SaveData.shipPosition[1], SaveData.shipPosition[2]);
-        transform.rotation = Quaternion.Euler(SaveData.shipRotation[0], SaveData.shipRotation[1], SaveData.shipRotation[2]);
+        transform.eulerAngles = new Vector3(0,0,SaveData.shipRotationZ);
+        Debug.Log(transform.eulerAngles);
+        Debug.Log(transform.rotation);
         Bar_controller fuelBarScript = fuelBar.gameObject.GetComponent<Bar_controller>();
         Bar_controller healthBarScript = healthBar.gameObject.GetComponent<Bar_controller>();
-        
         fuelBarScript.setFillRate(SaveData.fuel);
         healthBarScript.setFillRate(SaveData.health);
+
+        for(int i=0;i<5;i++){
+            if(i< SaveData.numberOfMissiles)
+                images[i].enabled = true;
+            else
+                images[i].enabled = false;
+        }
+
         hasRocket = true;
         brakeParticlesLeft.SetActive(false);
         brakeParticlesRight.SetActive(false);
@@ -52,17 +61,7 @@ public class ship_controller : MonoBehaviour
     {
         if (Input.GetKeyDown("escape"))
         {
-            float[] shipPosition = {transform.position.x, transform.position.y, transform.position.z};
-            Debug.Log(shipPosition[0]);
-            Debug.Log(shipPosition[1]);
-            Debug.Log(shipPosition[2]);
-            SaveData.shipPosition = shipPosition;
-            float[] shipRotation = {transform.localEulerAngles.x, transform.localEulerAngles.y, transform.localEulerAngles.z};
-            Debug.Log(shipRotation[0]);
-            Debug.Log(shipRotation[1]);
-            Debug.Log(shipRotation[2]);
-            SaveData.shipRotation = shipRotation;
-            SaveLoad.Save();
+            saveOrbit();
         }
         dirX = Input.GetAxis("Horizontal");
         dirY = Input.GetAxis("Vertical");
@@ -183,6 +182,20 @@ public class ship_controller : MonoBehaviour
         barScript.ReduceBar(reduceAmount / 100);
         SaveData.fuel -= (float)reduceAmount/100;
         Debug.Log(SaveData.fuel);
+        SaveLoad.Save();
+    }
+
+    public void saveOrbit(){
+        float[] shipPosition = {transform.position.x, transform.position.y, transform.position.z};
+        SaveData.shipPosition = shipPosition;
+        float shipRotationZ =  transform.localEulerAngles.z;
+        Debug.Log(transform.rotation);
+        SaveData.shipRotationZ = shipRotationZ;
+        int numberOfMissiles = 0;
+        for(int i=0;i<images.Length;i++)
+            if(images[i].isActiveAndEnabled)
+                numberOfMissiles++;
+        SaveData.numberOfMissiles = numberOfMissiles;
         SaveLoad.Save();
     }
 }

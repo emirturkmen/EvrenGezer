@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 public class orbitcontroller : MonoBehaviour
@@ -34,6 +35,7 @@ public class orbitcontroller : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E) && !planetName.Equals(""))
         {
+            saveOrbit();
             SceneManager.LoadScene(planetName, LoadSceneMode.Single);
         }
 
@@ -48,6 +50,8 @@ public class orbitcontroller : MonoBehaviour
             {
                 Time.timeScale = 0;
                 Escape.SetActive(true);
+                SaveData.sceneName = SceneManager.GetActiveScene().name;
+                SaveLoad.Save();
             }
         }
     }
@@ -71,5 +75,21 @@ public class orbitcontroller : MonoBehaviour
     public void openRestart()
     {
 
+    }
+
+    private void saveOrbit(){
+        float[] shipPosition = {transform.position.x, transform.position.y, transform.position.z};
+        SaveData.shipPosition = shipPosition;
+        float shipRotationZ =  transform.localEulerAngles.z;
+        Debug.Log(transform.rotation);
+        SaveData.shipRotationZ = shipRotationZ;
+        ship_controller shipScript = Rocket.GetComponent<ship_controller>();
+        Image[] images = shipScript.images;
+        int numberOfMissiles = 0;
+        for(int i=0;i<images.Length;i++)
+            if(images[i].isActiveAndEnabled)
+                numberOfMissiles++;
+        SaveData.numberOfMissiles = numberOfMissiles;
+        SaveLoad.Save();
     }
 }

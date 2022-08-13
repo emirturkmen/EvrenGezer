@@ -50,5 +50,15 @@ public class PlayerInventory : MonoBehaviour
             col.gameObject.SetActive(false);
             SaveLoad.Save();
         }
+        else if(col.tag == "Meteor"){
+            SaveLoad.Load();
+            if(SaveData.health < 1.0f){
+                SaveData.health -= 0.1f;
+                GameObject fillBar = GameObject.FindWithTag("HealthBarFill");
+                Bar_controller bar_controller = fillBar.GetComponent<Bar_controller>();
+                bar_controller.setFillRate(SaveData.health);
+            }
+            SaveLoad.Save();
+        }
     }
 }

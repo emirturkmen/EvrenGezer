@@ -7,7 +7,9 @@ public class SaveData
     public static float health;
     public static float coin;
     public static float[] shipPosition;
-    public static float[] shipRotation;
+    public static float shipRotationZ;
+    public static string sceneName;
+    public static int numberOfMissiles;
 }
 
 public class SaveLoad 
@@ -21,7 +23,9 @@ public class SaveLoad
             bf.Serialize(fs, SaveData.health);
             bf.Serialize(fs, SaveData.coin);
             bf.Serialize(fs, SaveData.shipPosition);
-            bf.Serialize(fs, SaveData.shipRotation);
+            bf.Serialize(fs, SaveData.shipRotationZ);
+            bf.Serialize(fs, SaveData.sceneName);
+            bf.Serialize(fs, SaveData.numberOfMissiles);
         }
     }
 
@@ -39,17 +43,20 @@ public class SaveLoad
             SaveData.health = (float)bf.Deserialize (fs);
             SaveData.coin = (float)bf.Deserialize (fs);
             SaveData.shipPosition = (float [])bf.Deserialize (fs);
-            SaveData.shipRotation = (float [])bf.Deserialize (fs);
+            SaveData.shipRotationZ = (float)bf.Deserialize (fs);
+            SaveData.sceneName = (string)bf.Deserialize (fs);
+            SaveData.numberOfMissiles = (int)bf.Deserialize (fs);
         }
     }
 
     public static void LoadNewGame(){
         float [] positions = new float[] {-39.0f,16.775f,0f};
-        float [] rotations = new float[] {0f,0f,0f};
         SaveData.fuel = 0.5f;
         SaveData.health = 0.5f;
         SaveData.coin = 0f;
         SaveData.shipPosition = positions;
-        SaveData.shipRotation = rotations;
+        SaveData.shipRotationZ = 0f;
+        SaveData.sceneName = "";
+        SaveData.numberOfMissiles = 5;
     }
 }
