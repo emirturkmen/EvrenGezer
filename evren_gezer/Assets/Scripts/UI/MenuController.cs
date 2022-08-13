@@ -31,7 +31,7 @@ public class MenuController : MonoBehaviour
         loadCoin();
         audiomanager = gameManager.GetComponent<AudioManager>();
 
-        DontDestroyOnLoad(this.gameObject);
+        
 
         if (!checkResume())
         {

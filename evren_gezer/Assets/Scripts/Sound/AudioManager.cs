@@ -6,6 +6,10 @@ public class AudioManager : MonoBehaviour
 {
     public Audio[] audios;
 
+    private void Start()
+    {
+        DontDestroyOnLoad(this.gameObject);
+    }
     public void playSound(string name)
     {
         foreach(var item in audios)

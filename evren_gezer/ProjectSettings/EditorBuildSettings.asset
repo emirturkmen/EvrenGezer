@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: b975de654d77f0a40890072f61d5421f
   - enabled: 1
-    path: Assets/Scenes/Planet1.unity
+    path: Assets/Scenes/Earth.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
     path: Assets/Scenes/Orbit.unity

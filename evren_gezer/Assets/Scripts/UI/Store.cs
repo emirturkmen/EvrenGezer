@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
+
 
 public class Store : MonoBehaviour
 {
@@ -23,5 +25,10 @@ public class Store : MonoBehaviour
         if(SaveData.coin < price)
             return false;
         return true;
+    }
+
+    public void loadMenu()
+    {
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
     }
 }
