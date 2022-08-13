@@ -11,10 +11,15 @@ public class PlayerController : MonoBehaviour
 	public Animator anim;
 	public float allowPlayerRotation = 0.1f;
 
+	public GameObject planet;
+
+	private float distance;
 	void Start(){
 		anim = this.GetComponent<Animator> ();
 		rb = GetComponent<Rigidbody>();
 		rb.freezeRotation = true;
+
+		distance = Vector3.Distance(transform.position, planet.transform.position);
 	}
 	
 	void Update() {
@@ -43,4 +48,14 @@ public class PlayerController : MonoBehaviour
 		}
 		
 	}
+
+    private void FixedUpdate()
+    {
+        if(Vector3.Distance(transform.position,planet.transform.position) > distance)
+        {
+			Vector3 dir = transform.position - planet.transform.position;
+			Vector3 newPose = dir.normalized * distance;
+			transform.position = newPose;
+        }
+    }
 }

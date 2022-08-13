@@ -14,6 +14,10 @@ TagManager:
   - Rocket
   - ShipBullet
   - EnemyBullet
+  - GoldText
+  - Coin
+  - PlayerEyes
+  - Meteor
   layers:
   - Default
   - TransparentFX
