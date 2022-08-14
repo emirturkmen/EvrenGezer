@@ -11,8 +11,15 @@ public class orbitcontroller : MonoBehaviour
     public GameObject Rocket;
     public GameObject planetEnterText;
     public GameObject Escape;
+    public GameObject YouWin;
 
     public GameObject Restart;
+    public GameObject gameController;
+
+    private void Start()
+    {
+        gameController = GameObject.Find("GameController");
+    }
 
     private void Update()
     {
@@ -38,9 +45,14 @@ public class orbitcontroller : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.E) && !planetName.Equals(""))
-        {   
+        {
+            if (planetName.Equals("Venus"))
+            {
+                Time.timeScale = 0;
+                YouWin.SetActive(true);
+                return;
+            }
             saveOrbit();
-            Debug.Log(planetName);
             SceneManager.LoadScene(planetName, LoadSceneMode.Single);
         }
 
@@ -81,10 +93,9 @@ public class orbitcontroller : MonoBehaviour
 
 
     private void saveOrbit(){
-        float[] shipPosition = {transform.position.x, transform.position.y, transform.position.z};
+        float[] shipPosition = {Rocket.transform.position.x, Rocket.transform.position.y, Rocket.transform.position.z};
         SaveData.shipPosition = shipPosition;
-        float shipRotationZ =  transform.localEulerAngles.z;
-        Debug.Log(transform.rotation);
+        float shipRotationZ = Rocket.transform.localEulerAngles.z;
         SaveData.shipRotationZ = shipRotationZ;
         ship_controller shipScript = Rocket.GetComponent<ship_controller>();
         Image[] images = shipScript.images;
@@ -104,7 +115,8 @@ public class orbitcontroller : MonoBehaviour
 
     public void restartGame()
     {
-        SceneManager.LoadScene("Earth", LoadSceneMode.Single);
+        Time.timeScale = 1;
         Restart.SetActive(false);
+        SceneManager.LoadScene("Earth", LoadSceneMode.Single);
     }
 }

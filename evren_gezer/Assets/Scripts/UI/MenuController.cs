@@ -64,7 +64,8 @@ public class MenuController : MonoBehaviour
 
     public void loadSavedGame()
     {
-        SceneManager.LoadScene(newGameScene, LoadSceneMode.Single);
+        SaveLoad.Load();
+        SceneManager.LoadScene(SaveData.sceneName, LoadSceneMode.Single);
         audiomanager.playSound("button");
         isMainMenu = false;
     }

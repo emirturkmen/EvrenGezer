@@ -13,8 +13,6 @@ public class Store : MonoBehaviour
     void Start()
     {
         SaveLoad.Load();
-        SaveData.coin = 450;
-        SaveLoad.Save();
         loadCoin();
     }
 

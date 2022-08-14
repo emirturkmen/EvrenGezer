@@ -9,9 +9,11 @@ public class HomingMissile : MonoBehaviour
     public float rotateSpeed;
     private Rigidbody2D rb;
     public GameObject explosionEffect;
+    public orbitcontroller orbitController;
 
     void Start()
     {
+        orbitController = GameObject.Find("Manager").GetComponent<orbitcontroller>();
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -32,6 +34,7 @@ public class HomingMissile : MonoBehaviour
     {
         if (collision.gameObject.tag.Equals("EnemyShip"))
         {
+            orbitController.gameController.GetComponent<AudioManager>().playSound("RocketBomb");
             enemy enemyScript = collision.gameObject.GetComponent<enemy>();
             enemyScript.health = 0;
             Destroy(Instantiate(explosionEffect, transform.position, transform.rotation), 2f);

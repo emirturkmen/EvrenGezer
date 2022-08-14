@@ -38,8 +38,6 @@ public class ship_controller : MonoBehaviour
         SaveLoad.Load();
         transform.position = new Vector3(SaveData.shipPosition[0], SaveData.shipPosition[1], SaveData.shipPosition[2]);
         transform.eulerAngles = new Vector3(0,0,SaveData.shipRotationZ);
-        Debug.Log(transform.eulerAngles);
-        Debug.Log(transform.rotation);
         fuelBarScript = fuelBar.gameObject.GetComponent<Bar_controller>();
         healthBarScript = healthBar.gameObject.GetComponent<Bar_controller>();
         fuelBarScript.setFillRate(SaveData.fuel);
@@ -63,8 +61,9 @@ public class ship_controller : MonoBehaviour
 
     private void Update()
     {
-	    if (healthBarScript.GetFillRate() <= 0)
+	    if (healthBarScript.GetFillRate() <= 0.05)
         {
+            orbitcontroller.gameController.GetComponent<AudioManager>().playSound("ShipBomb");
             Destroy(Instantiate(explosionEffect, transform.position, transform.rotation), 2f);
             orbitcontroller.karakterOldu();
             Destroy(gameObject);
@@ -140,7 +139,7 @@ public class ship_controller : MonoBehaviour
                 brakeParticlesRight.SetActive(false);
             }
             rb.AddForceAtPosition(mainForceDir, mainNozzle.position);
-            ReduceFuel(0.05f);
+            ReduceFuel(0.03f);
         }
         else if(dirY < 0)
         {
@@ -185,7 +184,6 @@ public class ship_controller : MonoBehaviour
         SaveLoad.Load();
         healthBarScript.ReduceBar((float)reduceAmount / 100);
         SaveData.health -= (float)reduceAmount/100;
-        Debug.Log(SaveData.health);
         SaveLoad.Save();
     }
 
@@ -194,7 +192,6 @@ public class ship_controller : MonoBehaviour
         SaveLoad.Load();
         fuelBarScript.ReduceBar(reduceAmount / 100);
         SaveData.fuel -= (float)reduceAmount/100;
-        Debug.Log(SaveData.fuel);
         SaveLoad.Save();
     }
 
@@ -202,7 +199,6 @@ public class ship_controller : MonoBehaviour
         float[] shipPosition = {transform.position.x, transform.position.y, transform.position.z};
         SaveData.shipPosition = shipPosition;
         float shipRotationZ =  transform.localEulerAngles.z;
-        Debug.Log(transform.rotation);
         SaveData.shipRotationZ = shipRotationZ;
         int numberOfMissiles = 0;
         for(int i=0;i<images.Length;i++)

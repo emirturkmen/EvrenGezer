@@ -19,6 +19,7 @@ public class enemy : MonoBehaviour
     public Camera cam;
     public int health = 100;
     public GameObject explosionEffect;
+    public GameObject orbitController;
 
     void Start()
     {
@@ -75,6 +76,8 @@ public class enemy : MonoBehaviour
     {
         if (Time.time > nextFire)
         {
+            GameObject gameController = orbitController.GetComponent<orbitcontroller>().gameController;
+            gameController.GetComponent<AudioManager>().playSound("EnemyLaser");
             Instantiate(bullet, transform.position, Quaternion.identity);
             nextFire = Time.time + fireRate;
         }

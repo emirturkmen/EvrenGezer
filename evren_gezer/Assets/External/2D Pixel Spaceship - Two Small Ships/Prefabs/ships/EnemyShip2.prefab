@@ -273,7 +273,7 @@ MonoBehaviour:
   targetMoveDistance: 0
   speed: 0.5
   range: 10
-  fireRate: 2
+  fireRate: 1.5
   canMove: 0
   firstMove: 0
   enemyHealthPrefab: {fileID: 4437724260007857286, guid: bf13e4f1cbdea4c3ebd9859ed38d4a92,

@@ -5,10 +5,19 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     public Audio[] audios;
+    public static AudioManager instance;
 
     private void Start()
     {
-        DontDestroyOnLoad(this.gameObject);
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+        DontDestroyOnLoad(instance);
     }
     public void playSound(string name)
     {

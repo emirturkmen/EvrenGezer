@@ -58,5 +58,6 @@ public class SaveLoad
         SaveData.shipRotationZ = 0f;
         SaveData.sceneName = "";
         SaveData.numberOfMissiles = 5;
+        SaveLoad.Save();
     }
 }

@@ -58,7 +58,7 @@ public class PlayerInventory : MonoBehaviour
         else if(col.gameObject.tag == "Meteor"){
             Debug.Log("asdsadas");
             SaveLoad.Load();
-            if(SaveData.health >= 0.1f){
+            if(SaveData.health >= 0.11f){
                 SaveData.health -= 0.1f;
                 GameObject fillBar = GameObject.FindWithTag("HealthBarFill");
                 Bar_controller bar_controller = fillBar.GetComponent<Bar_controller>();
