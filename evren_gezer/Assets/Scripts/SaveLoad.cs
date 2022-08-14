@@ -50,7 +50,7 @@ public class SaveLoad
     }
 
     public static void LoadNewGame(){
-        float [] positions = new float[] {-39.0f,16.775f,0f};
+        float [] positions = new float[] { -33f, 20f, 0f};
         SaveData.fuel = 0.5f;
         SaveData.health = 0.5f;
         SaveData.coin = 0f;

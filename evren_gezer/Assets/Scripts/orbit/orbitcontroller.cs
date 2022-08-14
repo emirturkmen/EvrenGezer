@@ -21,7 +21,7 @@ public class orbitcontroller : MonoBehaviour
         {
             foreach (GameObject item in planets)
             {
-                if (Vector2.Distance(item.transform.position, Rocket.transform.position) < 6)
+                if (Vector2.Distance(item.transform.position, Rocket.transform.position) < 8)
                 {
                     planetName = item.name;
                 }
@@ -38,8 +38,9 @@ public class orbitcontroller : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.E) && !planetName.Equals(""))
-        {
+        {   
             saveOrbit();
+            Debug.Log(planetName);
             SceneManager.LoadScene(planetName, LoadSceneMode.Single);
         }
 
