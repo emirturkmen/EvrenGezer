@@ -4,6 +4,6 @@
 
 # Takım üyeleri:
 
-Emir Türkmen - 181101013
-Abdussamet Türker - 181101015
-Oğuzhan Karahan - 181101007
+Emir Türkmen - @emirturkmen
+Abdussamet Türker - @abdussamettrkr
+Oğuzhan Karahan - @karahanoguzhan
